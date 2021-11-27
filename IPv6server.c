@@ -10,8 +10,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-#define TOTALFORK 3
-
 int main(int argc, char* argv[]){
     if (argc != 3) {
         printf("usage: %s <IP> <Port no.>", argv[0]);
@@ -31,7 +29,9 @@ int main(int argc, char* argv[]){
     /* create information of the server */
     memset(&serv_addr, 0x00, sizeof(serv_addr));
     serv_addr.sin6_family = AF_INET6;
-    serv_addr.sin6_addr = in6addr_any;
+    if (inet_pton(AF_INET6, argv[1], &serv_addr.sin6_addr) != 1){
+        printf("server address not mapped!");
+    }
     serv_addr.sin6_port = atoi(argv[2]);
     serv_addr.sin6_flowinfo = 0;
 
@@ -39,16 +39,25 @@ int main(int argc, char* argv[]){
     if (bind(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1){
         printf("error while executing bind() function!");
         exit(1);
+    } else {
+        printf("bind() success...");
     }
 
     /* listen to check the connect() request and create backlog queue*/
-    listen(sockfd, 5);
+    if (listen(sockfd, 5) == -1){
+        printf("error while executing listen() function!");
+        exit(1);
+    } else {
+        printf("listen() success...server ready!");
+    }
     
     /* read the token from the client */
     int clientno = 0;
+    int cli_adr_sz = sizeof(cli6_addr);
     while (1){
         /* accept for the actual communication with the client*/
-        accsockfd = accept(sockfd, (struct sockaddr*)&cli6_addr, sizeof(cli6_addr));
+        
+        accsockfd = accept(sockfd, (struct sockaddr*)&cli6_addr, &cli_adr_sz);
         clientno += 1;
         printf("(%d) client connected...", clientno);
         pid = fork();
@@ -59,9 +68,10 @@ int main(int argc, char* argv[]){
             while ((readlen = read(accsockfd, buffer, sizeof(buffer))) != 0){
                 printf("%s", buffer);
             }
+        } else {
+            close(accsockfd);
         }
-        
     }
-
-
+    close(sockfd);
+    printf("%s", buffer);
 }
