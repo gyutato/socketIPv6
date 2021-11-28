@@ -37,7 +37,7 @@ int main(void)
 
 	server_addr.sin6_family = AF_INET6;
 	// server_addr.sin6_addr = in6addr_any;
-    inet_pton(AF_INET6, "2001:0:c38c:c38c:c3:22d1:503f:828", (void*)&pton_addr);
+    inet_pton(AF_INET6, "2001:0:c38c:c38c:2c80:10e3:503f:828", (void*)&pton_addr);
     memcpy((void*)&server_addr.sin6_addr.s6_addr, (void*)pton_addr, 16);
 	server_addr.sin6_port = htons(SERVER_PORT);
  
@@ -79,11 +79,17 @@ int main(void)
          pid = fork();
         
          if (pid == 0){
-             memset(&buffer, 0x00, sizeof(buffer));
-             close(listen_sock_fd);
-             read(client_sock_fd, buffer, sizeof(buffer));
-             printf("%s\n", buffer);
-             return EXIT_SUCCESS;
+            close(listen_sock_fd);
+
+            memset(&buffer, 0x00, sizeof(buffer));
+            read(client_sock_fd, buffer, sizeof(buffer));
+            printf("%s\n", buffer);
+
+            // memset(&buffer, 0x00, sizeof(buffer));
+            // read(client_sock_fd, buffer, sizeof(buffer));
+            // printf("%s\n", buffer);
+
+            return EXIT_SUCCESS;
         } else {
             close(client_sock_fd);
         }
