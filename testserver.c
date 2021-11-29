@@ -37,7 +37,7 @@ int main(void)
 
 	server_addr.sin6_family = AF_INET6;
 	// server_addr.sin6_addr = in6addr_any;
-    inet_pton(AF_INET6, "2001:0:c38c:c38c:2c80:10e3:503f:828", (void*)&pton_addr);
+    inet_pton(AF_INET6, "2001:0:c38c:c38c:18c7:3fbc:503f:828", (void*)&pton_addr);
     memcpy((void*)&server_addr.sin6_addr.s6_addr, (void*)pton_addr, 16);
 	server_addr.sin6_port = htons(SERVER_PORT);
  
