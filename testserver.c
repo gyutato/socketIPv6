@@ -25,19 +25,13 @@ int main(void)
 	if(listen_sock_fd == -1) {
 		perror("socket()");
 		return EXIT_FAILURE;
-	}
+	} else
+		printf("socket created....\n");
  
-	/* Set socket to reuse address */
-	flag = 1;
-	ret = setsockopt(listen_sock_fd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));
-	if(ret == -1) {
-		perror("setsockopt()");
-		return EXIT_FAILURE;
-	}
-
+	/* Set socket information */
 	server_addr.sin6_family = AF_INET6;
 	// server_addr.sin6_addr = in6addr_any;
-    inet_pton(AF_INET6, "2001:0:c38c:c38c:18c7:3fbc:503f:828", (void*)&pton_addr);
+    inet_pton(AF_INET6, "2001:0:c38c:c38c:4c2:3c8a:503f:828", (void*)&pton_addr);
     memcpy((void*)&server_addr.sin6_addr.s6_addr, (void*)pton_addr, 16);
 	server_addr.sin6_port = htons(SERVER_PORT);
  
@@ -47,7 +41,8 @@ int main(void)
 		perror("bind()");
 		close(listen_sock_fd);
 		return EXIT_FAILURE;
-	}
+	} else
+		printf("binding the socket....\n");
  
 	/* Create listening queue (client requests) */
 	ret = listen(listen_sock_fd, CLIENT_QUEUE_LEN);
@@ -55,7 +50,8 @@ int main(void)
 		perror("listen()");
 		close(listen_sock_fd);
 		return EXIT_FAILURE;
-	}
+	} else
+		printf("wating for the clients....\n");
  
 	client_addr_len = sizeof(client_addr);
  
