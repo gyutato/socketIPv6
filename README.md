@@ -13,3 +13,8 @@
 - multi clients에 대응하는 concurrent 서버 구현 필요
 
 - IPv6 서버를 위한 tunneling 필요
+<br/>
+
+
+## Protocol and the reference result
+![그림1](https://user-images.githubusercontent.com/94846990/144198501-036205c5-02d3-4075-9529-b5f3e1364a60.png)
