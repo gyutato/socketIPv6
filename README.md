@@ -4,7 +4,7 @@
 
 - Socket programming을 통해 IPv4 및 IPv6 통신 구현
 
-	- [`IPv4 클라이언트`로 IPv4 서버에 접속하여 자신의 IPv6 서버 IP 및 포트번호 전달](#1\)-IPv4-client가-IPv4-서버에-접속)
+	- [`IPv4 클라이언트`로 IPv4 서버에 접속하여 자신의 IPv6 서버 IP 및 포트번호 전달](#1.-Protocol-and-Program-Details)
 
 	- `IPv6 서버`는 concurrent하게 구현되어 IPv6 클라이언트(총 5개, multi clients)가 전달하는 20바이트짜리 난수 5개를 수신 후,<br/>이를 `IPv4 클라이언트`에 전달
 
