@@ -34,12 +34,12 @@ info
 <br/><br/>
 
 ### 2\) IPv6 서버가 multi clients로부터 5개의 토큰을 수신 후 전달
-**Concurrent IPv6 서버 구현**
+**(1) Concurrent IPv6 서버 구현**
 
 info
 <br/>
 
-**IPv6 서버와 IPv4 클라이언트 간 통신**
+**(2) IPv6 서버와 IPv4 클라이언트 간 통신**
 
 info
 <br/><br/>
