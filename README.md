@@ -15,7 +15,7 @@
 - IPv6 서버를 위한 tunneling 필요
 <br/>
 
-## 1. Protocol and Program Details
+## 1. protocol and program details
 <img width="85%" src="https://user-images.githubusercontent.com/94846990/144199378-92fcc5a1-3638-4cf2-9fd8-86fe0d000d02.png">
 <br/>
 
