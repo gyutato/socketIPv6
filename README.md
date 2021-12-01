@@ -37,7 +37,7 @@ info
 **Concurrent IPv6 서버 구현**
 
 info
-<br/><br/>
+<br/>
 
 **IPv6 서버와 IPv4 클라이언트 간 통신**
 
