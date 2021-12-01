@@ -1,10 +1,11 @@
 # IPv6 Socket Programming
 ````
-🌱프로젝트 수행에 필요한 소켓 및 네트워크 관련 내용은 본 repo의 [wiki](https://github.com/gywn-dev/socketIPv6/wiki)에 더 자세하게 정리되어 있음
+🌱프로젝트 수행에 필요한 소켓 및 네트워크 관련 내용은 본 repo의 wiki에 더 자세하게 정리되어 있음
 ````
-<br/>
+🌟[ wiki](https://github.com/gywn-dev/socketIPv6/wiki)
+<br/><br/>
 
-⚙️ **2021년 2학기 최형기 교수님 컴퓨터네트웍개론 프로젝트**
+### ⚙️ **2021년 2학기 최형기 교수님 컴퓨터네트웍개론 프로젝트**
 
 - Socket programming을 통해 IPv4 및 IPv6 통신 구현
 
