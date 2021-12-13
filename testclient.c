@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	
 		/* Connect to server running on localhost */
 		server_addr.sin6_family = AF_INET6;
-		inet_pton(AF_INET6, "2001:0:c38c:c38c:18c7:3fbc:503f:828", &server_addr.sin6_addr);
+		inet_pton(AF_INET6, "2001:0:c38c:c38c:4c2:3c8a:503f:828", &server_addr.sin6_addr);
 		server_addr.sin6_port = htons(SERVER_PORT);
 	
 		/* Try to do TCP handshake with server */
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
 		/* Connect to server running on localhost */
 		server_addr.sin6_family = AF_INET6;
-		inet_pton(AF_INET6, "2001:0:c38c:c38c:18c7:3fbc:503f:828", &server_addr.sin6_addr);
+		inet_pton(AF_INET6, "2001:0:c38c:c38c:4c2:3c8a:503f:828", &server_addr.sin6_addr);
 		server_addr.sin6_port = htons(SERVER_PORT);
 	
 		/* Try to do TCP handshake with server */

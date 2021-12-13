@@ -6,10 +6,18 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <sys/msg.h> 
+#include <sys/ipc.h> 
+
 
 #define CLIENT_QUEUE_LEN 3
 #define TOKEN_REQUIRED 5
 #define SERVER_PORT 7002
+
+typedef struct _msg_data {
+   long  data_type;
+   char  data_buff[256];
+} msg_data;
 
 int main(void){
     
@@ -33,7 +41,7 @@ int main(void){
     /* Set socket information */
     server_addr.sin6_family = AF_INET6;
     // server_addr.sin6_addr = in6addr_any;
-    inet_pton(AF_INET6, "2001:0:c38c:c38c:3800:5aa8:503f:828", (void*)&pton_addr);
+    inet_pton(AF_INET6, "2001:0:c38c:c38c:485:7cd0:503f:828", (void*)&pton_addr);
     memcpy((void*)&server_addr.sin6_addr.s6_addr, (void*)pton_addr, 16);
     server_addr.sin6_port = htons(SERVER_PORT);
 
@@ -93,12 +101,36 @@ int main(void){
             sleep(2);
             read(fds[0], buffer, sizeof(buffer));
             memcpy(tokens+((strlen(buffer)-1)*tokenAccepted), buffer, strlen(buffer)-1);
+            tokens[strlen(tokens)-1] = ',';
             close(client_sock_fd);//sock is closed BY PARENT
         }
         tokenAccepted++;
     }//close exterior while
     printf("all socket closed\n");
     printf("%s", tokens);
+    printf("\nmessage size to be sent: %ld bytes\n", strlen(tokens));
     printf("server closed\n");
+
+    printf("\n=========== IPC through message queue ===========\n");
+
+    //IPC with IPv4 client
+    key_t key = 7002;
+    int msqid;
+    msg_data data;
+
+    if((msqid = msgget(key, IPC_CREAT|0666)) == -1){
+        perror("msgget() 실패: ");
+        exit(1);
+    }
+
+    data.data_type = 1;
+    memcpy(data.data_buff, tokens, strlen(tokens)-1);
+    printf("the data below would be sent:\n%s\n", data.data_buff);
+
+    if(msgsnd(msqid, &data, sizeof(msg_data) - sizeof(long), IPC_NOWAIT) == -1){
+        perror ("msgsnd() 실패:");
+        exit(1);
+    }
+
     return 0;
 }

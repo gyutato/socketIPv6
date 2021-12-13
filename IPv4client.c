@@ -5,7 +5,14 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <sys/msg.h> 
+#include <sys/ipc.h> 
 #include "client.h"
+
+typedef struct _msg_data {
+   long  data_type;
+   char  data_buff[256];
+} msg_data;
 
 int main(int argc, char* argv[]){
     if (argc != 3) {
@@ -47,14 +54,63 @@ int main(int argc, char* argv[]){
 
     /* send my IPv6 addr to server and receive next inquiry */
     memset(buffer, 0x00, sizeof(buffer));
-    read(0,buffer,sizeof(buffer));
+    read(0, buffer, sizeof(buffer));
     write(sockfd,buffer,strlen(buffer));
     readfromS(sockfd);
 
     /* send port no. to server and receive next inquiry */
     memset(buffer, 0x00, sizeof(buffer));
-    read(0,buffer,sizeof(buffer));
-    write(sockfd,buffer,strlen(buffer));
+    read(0, buffer, sizeof(buffer));
+    write(sockfd, buffer, strlen(buffer));
     readfromS(sockfd);
+
+    /* send Y for two times */
+    memset(buffer, 0x00, sizeof(buffer));
+    read(0, buffer, sizeof(buffer));
+    write(sockfd, buffer, strlen(buffer));
+    readfromS(sockfd);
+
+    memset(buffer, 0x00, sizeof(buffer));
+    read(0, buffer, sizeof(buffer));
+    write(sockfd, buffer, strlen(buffer));
+    readfromS(sockfd);
+
+    /* send OK for final confirm */
+    memset(buffer, 0x00, sizeof(buffer));
+    read(0, buffer, sizeof(buffer));
+    write(sockfd, buffer, strlen(buffer));
+    read(sockfd, buffer, sizeof(buffer));
+
+    /* prepare IPC with IPv6 server */
+    printf("\n** waiting for IPC data **\n");
+    sleep(20); //wait until the server receive all tokens
+
+    key_t key = 7002;
+    int msqid;
+    msg_data data;
+
+    if ((msqid = msgget(key, IPC_CREAT|0666)) == -1){
+        perror("msgget() 실패: ");
+        exit(1);
+    }
+
+    if(msgrcv(msqid, &data, sizeof(msg_data) - sizeof(long), 0, IPC_NOWAIT) == -1){
+        perror ("msgrcv() 실패:");
+        exit(1);
+    }
+
+    char recvtoken[256];
+    memcpy(recvtoken, data.data_buff, sizeof(data.data_buff)-1);
+    printf("\n 수신된 토큰: %s입니다.\n", recvtoken);
+    printf("\n** Back to socket communication **\n");
+
+    /* send received token to IPv4 server */
+    recvtoken[strlen(recvtoken)] = 0x0a;
+    write(sockfd, recvtoken, strlen(recvtoken));
+    memset(buffer, 0x00, sizeof(buffer));
+    readlen += read(sockfd, buffer, sizeof(buffer));
+    printf("\n%s\n", buffer);
+
+
 
 }
