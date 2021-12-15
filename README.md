@@ -1,7 +1,5 @@
 # IPv6 Socket Programming
-````
-🌱프로젝트 수행에 필요한 소켓 및 네트워크 관련 내용은 본 repo의 wiki에 더 자세하게 정리되어 있음
-````
+
 🌟[ wiki](https://github.com/gywn-dev/socketIPv6/wiki)
 <br/><br/>
 
