@@ -58,7 +58,7 @@
 <br/><br/>
 
 ## 4. Result
-image
+<img src="https://user-images.githubusercontent.com/94846990/146135823-73d8871f-9dd0-4dcc-ac7c-19ffd081af34.png">
 <br/>
 
 ## 5. Further Discussion
